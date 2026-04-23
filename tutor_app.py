@@ -56,6 +56,33 @@ if "thread_id" not in st.session_state:
     thread = client.beta.threads.create()
     st.session_state.thread_id = thread.id
 
+# --- Download Chat Log Section ---
+st.sidebar.markdown("---")
+st.sidebar.subheader("Extra Credit")
+
+if st.session_state.messages:
+    # Prepare the chat log text
+    chat_log = "Chat Log for " + today_date + "\n"
+    chat_log += "Instructor: Behrooz\n"
+    chat_log += "-------------------------------------------\n\n"
+    chat_log += "\nVerification ID (Thread): " + st.session_state.thread_id
+    
+    for msg in st.session_state.messages:
+        # Using string concatenation to avoid f-strings
+        line = msg["role"].upper() + ": " + msg["text"] + "\n\n"
+        chat_log += line
+        
+    # Create the download button
+    st.sidebar.download_button(
+        label="Download Chat Log",
+        data=chat_log,
+        file_name="python_tutor_log.txt",
+        mime="text/plain",
+        help="Download your conversation to submit on Canvas for extra credit."
+    )
+else:
+    st.sidebar.info("Start a conversation to enable the download button.")
+    
 # Display chat history
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
