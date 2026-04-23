@@ -2,6 +2,9 @@ import streamlit as st
 from openai import OpenAI
 import datetime
 
+# Get today's date
+today_date = datetime.date.today().strftime("%B %d, %Y")
+
 # --- Simple Access Control ---
 def check_password():
     """Returns True if the user had the correct password."""
@@ -90,9 +93,6 @@ for msg in st.session_state.messages:
         # If an image was part of this turn, we could display it here
         if "image_url" in msg:
             st.image(msg["image_url"])
-
-# Get today's date
-today_date = datetime.date.today().strftime("%B %d, %Y")
 
 # Chat input
 if user_input := st.chat_input("How can I help you?"):
