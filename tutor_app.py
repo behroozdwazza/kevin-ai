@@ -59,32 +59,41 @@ if "thread_id" not in st.session_state:
     thread = client.beta.threads.create()
     st.session_state.thread_id = thread.id
 
-# --- Download Chat Log Section ---
+# --- Sidebar for Extra Credit Identification ---
 st.sidebar.markdown("---")
-st.sidebar.subheader("Extra Credit")
+st.sidebar.subheader("Download and Submit your Chat Log for Extra Credit")
+
+# 1. Capture the Student's Name
+student_name = st.sidebar.text_input("Enter your Full Name:", placeholder="e.g., Jane Doe")
 
 if st.session_state.messages:
-    # Prepare the chat log text
-    chat_log = "Chat Log for " + today_date + "\n"
-    chat_log += "Instructor: Behrooz\n"
-    chat_log += "-------------------------------------------\n\n"
-    chat_log += "\nVerification ID (Thread): " + st.session_state.thread_id
-    
-    for msg in st.session_state.messages:
-        # Using string concatenation to avoid f-strings
-        line = msg["role"].upper() + ": " + msg["text"] + "\n\n"
-        chat_log += line
+    if student_name:
+        # 2. Build the chat log string only if a name is entered
+        chat_log = "STUDENT NAME: " + student_name + "\n"
+        chat_log += "DATE: " + today_date + "\n"
+        chat_log += "COURSE: ITSCM 280 / Business Analytics\n"
+        chat_log += "INSTRUCTOR: Behrooz\n"
+        chat_log += "VERIFICATION ID: " + st.session_state.thread_id + "\n"
+        chat_log += "-------------------------------------------\n\n"
         
-    # Create the download button
-    st.sidebar.download_button(
-        label="Download Chat Log",
-        data=chat_log,
-        file_name="python_tutor_log.txt",
-        mime="text/plain",
-        help="Download your conversation to submit on Canvas for extra credit."
-    )
+        for msg in st.session_state.messages:
+            # Applying your 'role' and 'text' terminology
+            entry = msg["role"].upper() + ": " + msg["text"] + "\n\n"
+            chat_log += entry
+            
+        # 3. The download button only appears once the name is provided
+        st.sidebar.download_button(
+            label="Download Chat Log",
+            data=chat_log,
+            file_name=student_name.replace(" ", "_") + "_tutor_log.txt",
+            mime="text/plain",
+            help="Click here to save your log for Canvas submission."
+        )
+    else:
+        # Prompt the student to enter their name first
+        st.sidebar.warning("Please enter your name above to enable the download button.")
 else:
-    st.sidebar.info("Start a conversation to enable the download button.")
+    st.sidebar.info("Start a conversation with Kevin to enable the log download.")
     
 # Display chat history
 for msg in st.session_state.messages:
