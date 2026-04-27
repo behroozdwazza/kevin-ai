@@ -71,7 +71,7 @@ if st.session_state.messages:
         # 2. Build the chat log string only if a name is entered
         chat_log = "STUDENT NAME: " + student_name + "\n"
         chat_log += "DATE: " + today_date + "\n"
-        chat_log += "COURSE: ITSCM 280 / Business Analytics\n"
+        chat_log += "COURSE: ITSCM 180 / Intro to Programming for Business Applications\n"
         chat_log += "INSTRUCTOR: Behrooz\n"
         chat_log += "VERIFICATION ID: " + st.session_state.thread_id + "\n"
         chat_log += "-------------------------------------------\n\n"
