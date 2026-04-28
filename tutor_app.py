@@ -41,8 +41,9 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 # Your Assistant ID
 ASSISTANT_ID = "asst_AfNPz2hBNGU2PRP2zpJwDlfj"
 
-st.set_page_config(page_title="Kevin: Socratic Python Tutor")
-st.title("Kevin: Socratic Python Tutor")
+st.set_page_config(page_title="Kevin AI: The ITSCM180 Smart Tutor")
+st.title("Kevin AI: The ITSCM180 Smart Tutor")
+st.logo("uww-logo.png")
 
 # --- Sidebar for Uploads ---
 st.sidebar.header("Upload Code Screenshot")
